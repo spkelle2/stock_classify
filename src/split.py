@@ -38,13 +38,13 @@ def split(rows, y, percent_gap=0.001):
     # 2.1
     # make z greater than absolute value of the distance of the value from the mean
     for i in rows:
-        prob += y[i] - sum([x[j]*y[j] for j in rows])/sum([x[j] for j in rows]) \
+        prob += y[i]*sum([x[j] for j in rows]) - sum([x[j]*y[j] for j in rows]) \
                 <= z[i]
 
     # 2.2
     # make z greater than absolute value of the distance of the value from the mean
     for i in rows:
-        prob += y[i] - sum([x[j]*y[j] for j in rows])/sum([x[j] for j in rows]) \
+        prob += y[i] * sum([x[j] for j in rows]) - sum([x[j]*y[j] for j in rows]) \
                 >= -z[i]
 
     # 3

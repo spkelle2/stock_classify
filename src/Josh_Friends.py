@@ -2,7 +2,7 @@ import pandas as pd
 import numpy as np 
 from models import Run, Inflection
 import matplotlib.pyplot as plt
-
+from split import split
 
 #Git status
 #Git Add
@@ -121,14 +121,24 @@ for key in runs:
 		DataMatrix[i,1] = stocks[key][1]['Adj Close'][runs[key][i].inflections[runLength-1]._next.index]-stocks[key][1]['Adj Close'][runs[key][i].inflections[runLength-1].index]
 
 SortedDataMatrix = DataMatrix[DataMatrix[:,0].argsort()]
-print(DataMatrix)
+#print(DataMatrix)
 #for i in range(SortedDataMatrix.shape[0]):
 #	print(SortedDataMatrix[i,:])
 
 print(SortedDataMatrix.shape)
 
+results = split(range(10),SortedDataMatrix[0:10,1],.001)
 
 
+for v in results['variables']:
+    if v.name[0] == 'x':
+        print("%s = %s" %(v.name, v.varValue) )
+
+
+#plt.scatter(SortedDataMatrix[0:end,0],SortedDataMatrix[0:end,1], color = 'red')
+#plt.scatter(SortedDataMatrix[end:10,0],SortedDataMatrix[end:10,1], color = 'blue')
+
+#plt.show()	
 
 
 
