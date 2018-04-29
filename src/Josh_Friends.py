@@ -43,9 +43,14 @@ def CreateRuns(key):
 	data = stocks[key][1]
 	while item != None:
 		if abs(data['Delta'].iloc[item.index])<runThreshold and data['Delta'].iloc[ item.index -1  ]*data['Delta'].iloc[item.index+1]>0:
-			item._prev._next = item._next._next
-			item._next._next.prev = item._prev
-			item._next = item._next._next
+			if item._next !=None:
+				if item._prev !=None: 	
+					item._prev._next = item._next._next
+				if item._next._next!=None:
+					item._next._next.prev = item._prev
+				item._next = item._next._next
+			elif item._prev !=None: 	
+				item._prev._next = None
 		item = item._next
 	item = stocks[key][0]
 	while item != None:
@@ -72,8 +77,8 @@ def CreateRuns(key):
 
 
 
-runThreshold = 1
-runLength = 3
+runThreshold = 10  #Dollars
+runLength = 2   #INflection Points
 deltaJ = 1
 stocks={} 
 stocks['DIS'] = Init('DIS') #, 'AAPL', 'FOXA', 'CBS', 'TMX']
@@ -92,6 +97,7 @@ for run in runs['DIS']:
 
 
 
+#RunsDF = pd.DataFrame.from_items([])
 c=0
 for key in runs:
 	for run in runs[key]:
