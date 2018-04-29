@@ -20,6 +20,6 @@ class Run(object):
         self.orient = orient
         self.volatility = volatility
         self.earnings_per_share = earnings_per_share
-        self.ave_price_run = None
+        self.RunPrices = None
         self.ave_price_200 = None
         self.ave_price_50 = None

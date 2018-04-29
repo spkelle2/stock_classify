@@ -78,8 +78,6 @@ deltaJ = 1
 stocks={} 
 stocks['DIS'] = Init('DIS') #, 'AAPL', 'FOXA', 'CBS', 'TMX']
 #stocks['AAPL']= Init('AAPL')
-
-
 runs={}
 for key in stocks:
 	runs[key] = CreateRuns(key)
@@ -92,6 +90,16 @@ for run in runs['DIS']:
 		print(stocks['DIS'][1]['Adj Close'].iloc[inflection.index])
 	print("\n")
 
+
+
+c=0
+for key in runs:
+	for run in runs[key]:
+		run.RunPrices = np.array(stocks[key][1]['Adj Close'][run.inflections[0].index:run.inflections[runLength-1].index+1])
+		#ToDo: Potential error in indexing
+		if c == 0 or c==1:
+			print(run.RunPrices)
+		c=c+1
 
 
 
