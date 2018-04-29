@@ -1,8 +1,22 @@
 import pandas as pd 
 import numpy as np 
 from models import Run, Inflection
+import matplotlib.pyplot as plt
 
 
+#Git status
+#Git Add
+#Git commit
+#git push origin master
+
+#git fetch 
+#git merge origin master
+
+#git branch
+#git checkout -b Josh
+
+#git checkout master
+#git branch -D Josh
 
 
 
@@ -77,9 +91,9 @@ def CreateRuns(key):
 
 
 
-runThreshold = 10  #Dollars
+runThreshold = 1  #Dollars
 runLength = 2   #INflection Points
-deltaJ = 1
+deltaJ = 2
 stocks={} 
 stocks['DIS'] = Init('DIS') #, 'AAPL', 'FOXA', 'CBS', 'TMX']
 #stocks['AAPL']= Init('AAPL')
@@ -89,26 +103,29 @@ for key in stocks:
 
 
 
-for run in runs['DIS']:
-	print("RUN:")
-	for inflection in run.inflections:
-		print(stocks['DIS'][1]['Adj Close'].iloc[inflection.index])
-	print("\n")
+#for run in runs['DIS']:
+	#print("RUN:")
+	#for inflection in run.inflections:
+	#	print(stocks['DIS'][1]['Adj Close'].iloc[inflection.index])
+	#print("\n")
 
 
 
-#RunsDF = pd.DataFrame.from_items([])
-c=0
+
 for key in runs:
-	for run in runs[key]:
-		run.RunPrices = np.array(stocks[key][1]['Adj Close'][run.inflections[0].index:run.inflections[runLength-1].index+1])
-		#ToDo: Potential error in indexing
-		if c == 0 or c==1:
-			print(run.RunPrices)
-		c=c+1
+	DataMatrix = np.zeros((len(runs[key])-1,2))
+	for i in range(len(runs[key])-1):
+		runs[key][i].RunPrices = np.array(stocks[key][1]['Adj Close'][runs[key][i].inflections[0].index:runs[key][i].inflections[runLength-1].index+1])
+		#print(stocks[key][1]['Adj Close'][runs[key][i].inflections[1].index],stocks[key][1]['Adj Close'][runs[key][i].inflections[0].index])
+		DataMatrix[i,0] = stocks[key][1]['Adj Close'][runs[key][i].inflections[1].index]-stocks[key][1]['Adj Close'][runs[key][i].inflections[0].index]
+		DataMatrix[i,1] = stocks[key][1]['Adj Close'][runs[key][i].inflections[runLength-1]._next.index]-stocks[key][1]['Adj Close'][runs[key][i].inflections[runLength-1].index]
 
+SortedDataMatrix = DataMatrix[DataMatrix[:,0].argsort()]
+print(DataMatrix)
+#for i in range(SortedDataMatrix.shape[0]):
+#	print(SortedDataMatrix[i,:])
 
-
+print(SortedDataMatrix.shape)
 
 
 
