@@ -3,6 +3,16 @@ import numpy as np
 from models import Run, Inflection
 
 
+#Git status
+#Git Add
+#Git commit
+#git push origin master
+
+#git fetch 
+#git merge origin master
+
+#git branch
+#git checkout -b Josh
 
 
 
